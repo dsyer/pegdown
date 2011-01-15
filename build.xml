@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="pegdown" default="compile.main">
+<project name="pegdown" default="compile.main" xmlns:artifact="antlib:org.apache.maven.artifact.ant">
 
     <!-- can be overridden at the command line with -Dversion= -->
     <property name="version" value="snapshot"/>
@@ -114,5 +114,35 @@
     <target name="dist" depends="clean, test, testjar, jar.source, jar.javadoc"
             description="Compiles, tests and jars everything">
     </target>
+
+	<path id="maven-ant-tasks.classpath" path="lib/maven/maven-ant-tasks-2.1.1.jar" />
+
+	<typedef resource="org/apache/maven/artifact/ant/antlib.xml"
+	      uri="antlib:org.apache.maven.artifact.ant"
+	      classpathref="maven-ant-tasks.classpath" />
+
+	<target name="maven-bundle" depends="jar,jar.javadoc,jar.source" description="This creates a bundle to upload to the central maven repo">
+	    <mkdir dir="build/maven"/>
+	    <copy file="build/pegdown-${version}.jar"
+	          tofile="build/maven/pegdown-${version}.jar"/>
+		<copy file="build/pegdown-${version}-src.jar" tofile="build/maven/pegdown-${version}-sources.jar"/>
+		<copy file="build/pegdown-${version}-javadoc.jar" tofile="build/maven/pegdown-${version}-javadoc.jar"/>
+	    <copy file="pom.xml" tofile="build/maven/pegdown-${version}.pom"/>
+	    <replace file="build/maven/pegdown-${version}.pom"
+	             token="VERSION" value="${version}"/>
+	</target>
+
+	<target name="maven-deploy" depends="maven-bundle" description="This installs a maven bundle locally and also deploys it to a local directory (build/repository) with all required metadate.">
+	    <artifact:pom id="pom" file="build/maven/pegdown-${version}.pom" />
+	    <artifact:install file="build/maven/pegdown-${version}.jar">
+	      <pom refid="pom"/>
+		  <attach file="build/maven/pegdown-${version}-sources.jar" classifier="sources"/>
+	    </artifact:install>
+	    <artifact:deploy file="build/maven/pegdown-${version}.jar">
+	      <remoteRepository url="file://${user.dir}/build/repository"/>
+	      <pom refid="pom"/>
+		  <attach file="build/maven/pegdown-${version}-sources.jar" classifier="sources"/>
+	    </artifact:deploy>
+	</target>
 
 </project>

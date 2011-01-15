@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<project>
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.pegdown</groupId>
+	<artifactId>pegdown</artifactId>
+	<version>VERSION</version>
+	<packaging>jar</packaging>
+	<name>Pegdown</name>
+	<description>Pegdown is a markdown implementation in Java</description>
+	<url>https://github.com/sirthias/pegdown</url>
+
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<scm>
+		<url>https://github.com/sirthias/pegdown</url>
+		<connection>scm:git:git://github.com/sirthias/pegdown</connection>
+	</scm>
+
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.parboiled</groupId>
+			<artifactId>parboiled-java</artifactId>
+			<version>0.10</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>5.10</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>jtidy</groupId>
+			<artifactId>jtidy</artifactId>
+			<version>jtidy</version>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+
+	<distributionManagement>
+		<repository>
+			<id>sonatype-nexus-staging</id>
+			<name>Nexus Release Repository</name>
+			<url>http://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
+
+	<repositories>
+		<repository>
+			<id>scala-tools</id>
+			<url>http://scala-tools.org/repo-releases/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+</project>
