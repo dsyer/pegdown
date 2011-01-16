@@ -29,7 +29,7 @@
 		<dependency>
 			<groupId>org.parboiled</groupId>
 			<artifactId>parboiled-java</artifactId>
-			<version>0.10</version>
+			<version>0.10.0</version>
 		</dependency>
 
 		<dependency>
